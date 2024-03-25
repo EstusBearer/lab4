@@ -2,8 +2,17 @@ trigger:
 - main
 
 pool:
-  name: 'GLAD2OS'
+  name: 'Default'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: dotnet restore
+  displayName: 'Restore NuGet packages'
+
+- script: dotnet build --configuration Release
+  displayName: 'Build project'
+
+- script: dotnet test
+  displayName: 'Run tests'
+
+- script: dotnet publish --configuration Release --output publish
+  displayName: 'Publish project'
